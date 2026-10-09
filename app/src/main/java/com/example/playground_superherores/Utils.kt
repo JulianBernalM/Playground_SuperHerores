@@ -8,5 +8,5 @@ object Routes {
     const val DETALLE = "detalle/{id}"
 
     //Nos permitirá construir una ruta
-    fun detalle(id: Int) = "detalle/{id}"
+    fun detalle(id: Int) = "detalle/$id"
 }
