@@ -1,5 +1,6 @@
 package com.example.playground_superherores
 
+//Atributos de cada super heroe
 data class Nombres(
     val id: Int,
     val nombre: String,
@@ -8,6 +9,7 @@ data class Nombres(
     val superPoderes: List<String>
 )
 
+//Lista de super herores con los anteriores atributos
 val listaNombres = listOf(
     Nombres(
         id = 1,
