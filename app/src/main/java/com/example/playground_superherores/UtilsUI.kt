@@ -1,5 +1,6 @@
 package com.example.playground_superherores
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,28 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.w3c.dom.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.material3.Card
+import androidx.compose.material3.Button
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 //El componente recibirá la URL y el nombre del superhéroe y mostrará su imagen.
 @Composable
@@ -52,4 +75,235 @@ fun HeroInfo(hero: Nombres){
         )
     }
 
+}
+
+//Componente encargado de mostrar la version detallada de la informacion del super heroe
+@Composable
+fun HeroInfoDetail(hero: Nombres) {
+    //Contenedor visual del detalle
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {//coloca elementos horizontalmente
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {//reserva el espacio para el avatar
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+            //Organiza información verticalmente
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = hero.nombre
+                )
+
+                Text(
+                    text = hero.descripcion
+                )
+
+                Text(
+                    text = "ID: ${hero.id}"
+                )
+            }
+        }
+
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = "Superpoderes"
+            )
+            //Permite que los superpoderes se acomoden en varias filas
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                hero.superPoderes.forEach { poder ->
+                    //Representa cada superpoder como una pequeña etiqueta.
+                    AssistChip(
+                        onClick = {},
+                        label = {
+                            Text(text = poder)
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+//Componente que analiza los superpoderes de cada héroe y determina qué perfil tiene: Estratega, Cósmico, Velocista o Titán
+fun heroProfile(superPoderes: List<String>): String {
+    return when {
+        superPoderes.any { it.contains("Inteligencia", ignoreCase = true) } ->
+            "Estratega"
+
+        superPoderes.any { it.contains("Vuelo", ignoreCase = true) } ->
+            "Cósmico"
+
+        superPoderes.any { it.contains("velocidad", ignoreCase = true) } ->
+            "Velocista"
+
+        superPoderes.any { it.contains("fuerza", ignoreCase = true) } ->
+            "Titán"
+
+        else -> "Héroe"
+    }
+}
+
+//Componente reutilizable que reunirá la imagen y la información del superhéroe.
+@Composable
+fun HeroCard(
+    hero: Nombres,
+    onClick: (() -> Unit)? = null,
+    option: Int = 0,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .then( //permite que la tarjeta sea opcionalmente pulsable
+                if (onClick != null) {
+                    Modifier.clickable { onClick() }
+                } else {
+                    Modifier
+                }
+            )
+    ) {
+        Column {
+            HeroImage(
+                imageUrl = hero.imagenUrl,
+                contentDescription = hero.nombre
+            )
+            //option = 0 muestra la información compacta // option = 1 muestra la información detallada
+            if (option == 0) {
+                HeroInfo(hero)
+            } else {
+                HeroInfoDetail(hero)
+            }
+        }
+    }
+}
+
+//Pantalla que mostrará todos los superhéroes en una lista vertical usando LazyColumn
+@Composable
+fun ListaSuperHeroes(
+    //La función recibe la listaNombres del archivo Nombres.kt
+    superheroes: List<Nombres>,
+    onVerDetalle: (Int) -> Unit
+) {//Lista vertical que contiene los super heroes
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(
+            items = superheroes,
+            key = { it.id }
+        ) { hero ->
+
+            HeroCard(
+                hero = hero,
+                onClick = {
+                    //Cuando el usuario pulse una tarjeta, enviamos el ID del héroe hacia la función que posteriormente se encargará de navegar a su detalle
+                    onVerDetalle(hero.id)
+                },
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+    }
+}
+
+//Pantalla que aparecerá cuando toquemos una tarjeta
+@Composable
+fun DetalleSuperHeroe(
+    //Recibe el superhéroe que debemos mostrar
+    hero: Nombres,
+    //Función para regresar a la lista
+    onVolver: () -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        item {
+            //Es importante porque option = 1 hace que se utilice nuestro componente en lugar de HeroInfo
+            HeroCard(
+                hero = hero,
+                option = 1
+            )
+
+            Button(
+                onClick = onVolver,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Volver a la lista"
+                )
+            }
+        }
+    }
+}
+
+//Componente que conectar la lista con el detalle y contiene dos rutas: lista y detalle/{id}
+//Primer componente que sera llamado en main activity
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        //Cuando la app se abre empieza en este lugar (en la lista)
+        startDestination = Routes.LISTA
+    ) {
+        composable(Routes.LISTA) {
+            ListaSuperHeroes(
+                superheroes = listaNombres,
+                onVerDetalle = { id ->
+                    navController.navigate(
+                        Routes.detalle(id)
+                    )
+                }
+            )
+        }
+        //Cuando pulsamos, por ejemplo, Batman: Se ejecuta Routes.detalle(2)
+        composable(
+            route = Routes.DETALLE,
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.IntType
+                }
+            )
+            //Recupera el id(2)
+        ) { backStackEntry ->
+
+            val id = backStackEntry
+                .arguments
+                ?.getInt("id")
+
+
+            //Busca en nuestra lista el superhéroe cuyo ID sea 2.
+            val hero = listaNombres.find {
+                it.id == id
+            }
+
+            //Por último, popBackStack() hará que el botón “Volver a la lista” regrese a la pantalla anterior
+            if (hero != null) {
+                DetalleSuperHeroe(
+                    hero = hero,
+                    onVolver = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+        }
+    }
 }
