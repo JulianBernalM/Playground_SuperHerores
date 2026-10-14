@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.material3.Card
 import androidx.compose.material3.Button
+import androidx.compose.material3.Label
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -89,57 +90,49 @@ fun HeroInfoDetail(hero: Nombres) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {//coloca elementos horizontalmente
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {//reserva el espacio para el avatar
-            Box(
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-            //Organiza información verticalmente
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = hero.nombre
-                )
-
-                Text(
-                    text = hero.descripcion
-                )
-
-                Text(
-                    text = "ID: ${hero.id}"
-                )
-            }
-        }
-
         Column(
             modifier = Modifier.padding(16.dp)
-        ) {
+        ) {//reserva el espacio para el avatar
+            Text(
+                text = hero.nombre
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+            //Organiza información verticalmente
+            Text(
+                text = hero.descripcion
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "ID: ${hero.id}"
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Text(
                 text = "Superpoderes"
             )
-            //Permite que los superpoderes se acomoden en varias filas
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 hero.superPoderes.forEach { poder ->
-                    //Representa cada superpoder como una pequeña etiqueta.
                     AssistChip(
                         onClick = {},
                         label = {
                             Text(text = poder)
                         }
-                    )
-                }
+                    )}
             }
         }
+
+
+
     }
 }
 
