@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+//import coil3.compose.AsyncImage
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 import org.w3c.dom.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,13 +39,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
 //El componente recibirá la URL y el nombre del superhéroe y mostrará su imagen.
+//Ahora el componente recigira una imagen y el nombre del superheroe
 @Composable
 fun HeroImage(
-    imageUrl: String,
+    imagenRes: Int,
     contentDescription: String
 ){
-    AsyncImage(
-        model = imageUrl,
+    Image(
+        painter = painterResource(id = imagenRes),
         contentDescription = contentDescription,
         modifier = Modifier
             .fillMaxWidth()
@@ -180,7 +183,7 @@ fun HeroCard(
     ) {
         Column {
             HeroImage(
-                imageUrl = hero.imagenUrl,
+                imagenRes = hero.imagenRes,
                 contentDescription = hero.nombre
             )
             //option = 0 muestra la información compacta // option = 1 muestra la información detallada
