@@ -69,7 +69,7 @@ fun HeroInfo(hero: Nombres){
         )
         //Creamos la condicion si el atributo hero.marvel es true entonces aparece Si
         Text(
-            text = "Marvel: ${if (hero.marvel) "Si" else "No"}"
+            text = "Universo: ${hero.universo}"
         )
     }
 
@@ -104,7 +104,7 @@ fun HeroInfoDetail(hero: Nombres) {
             )
 
             Text(
-                text = "Marvel: ${if (hero.marvel) "Si" else "No"}"
+                text = "Universo: ${hero.universo}"
             )
 
 

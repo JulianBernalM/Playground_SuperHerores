@@ -8,7 +8,7 @@ data class Nombres(
     val imagenRes: Int,
     val descripcion: String,
     val superPoderes: List<String>,
-    val marvel: Boolean
+    val universo: String
 )
 
 //Lista de super herores con los anteriores atributos
@@ -20,7 +20,7 @@ val listaNombres = listOf(
         imagenRes = R.drawable.superman,
         descripcion = "Héroe de Krypton con fuerza extraordinaria.",
         superPoderes = listOf("Vuelo", "Super fuerza", "Visión láser"),
-        marvel = false
+        universo = "DC"
     ),
     Nombres(
         id = 2,
@@ -29,7 +29,7 @@ val listaNombres = listOf(
         imagenRes = R.drawable.batman,
         descripcion = "Héroe de Gotham experto en estrategia y combate.",
         superPoderes = listOf("Inteligencia", "Artes marciales", "Tecnología"),
-        marvel = false
+        universo = "DC"
     ),
     Nombres(
         id = 3,
@@ -38,7 +38,7 @@ val listaNombres = listOf(
         imagenRes = R.drawable.flash,
         descripcion = "El hombre más rápido del mundo.",
         superPoderes = listOf("Super velocidad", "Reflejos", "Viaje temporal"),
-        marvel = false
+        universo = "DC"
     ),
     Nombres(
         id = 4,
@@ -50,6 +50,6 @@ val listaNombres = listOf(
             "Fuerza y resistencia sobrehumanas",
             "Su martillo encantado que le permite volar"
         ),
-        marvel = true
+        universo = "Marvel"
     )
 )
