@@ -67,6 +67,10 @@ fun HeroInfo(hero: Nombres){
         Text(
             text = "Superpoderes: ${hero.superPoderes.joinToString ()}"
         )
+        //Creamos la condicion si el atributo hero.marvel es true entonces aparece Si
+        Text(
+            text = "Marvel: ${if (hero.marvel) "Si" else "No"}"
+        )
     }
 
 }
@@ -98,6 +102,11 @@ fun HeroInfoDetail(hero: Nombres) {
             Text(
                 text = "ID: ${hero.id}"
             )
+
+            Text(
+                text = "Marvel: ${if (hero.marvel) "Si" else "No"}"
+            )
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
