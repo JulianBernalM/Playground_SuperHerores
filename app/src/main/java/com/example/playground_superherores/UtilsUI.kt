@@ -28,6 +28,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.graphics.Color
 
 //El componente recibirá la URL y el nombre del superhéroe y mostrará su imagen.
 //Ahora el componente recigira una imagen y el nombre del superheroe
@@ -155,14 +157,22 @@ fun heroProfile(superPoderes: List<String>): String {
 }
 
 //Componente reutilizable que reunirá la imagen y la información del superhéroe.
+//En este lugar es donde debemos hacer el cambio del color
 @Composable
 fun HeroCard(
     hero: Nombres,
     onClick: (() -> Unit)? = null,
     option: Int = 0,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
+        colors = CardDefaults.cardColors(
+            containerColor = if (hero.universo == "DC") {
+                Color.Gray
+            } else {
+                Color.Cyan
+            }
+        ),
         modifier = modifier
             .fillMaxWidth()
             .then( //permite que la tarjeta sea opcionalmente pulsable
