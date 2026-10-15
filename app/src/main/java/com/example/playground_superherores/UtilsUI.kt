@@ -30,9 +30,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
+//Los siguientes imports los creo para que textoBusqueda sea un estado de Jetpack Compose que pueda cambiar y hacer que la interfaz se actualice
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+//Los siguientes imports los creo para
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+//Los siguientes imports los creo para poder mostrar un campo donde el usuario pueda escribir "textField"
+import androidx.compose.material3.TextField
+
 
 //El componente recibirá la URL y el nombre del superhéroe y mostrará su imagen.
-//Ahora el componente recigira una imagen y el nombre del superheroe
+//Ahora el componente recibira una imagen y el nombre del superheroe
 @Composable
 fun HeroImage(
     imagenRes: Int,
@@ -204,25 +216,46 @@ fun ListaSuperHeroes(
     //La función recibe la listaNombres del archivo Nombres.kt
     superheroes: List<Nombres>,
     onVerDetalle: (Int) -> Unit
-) {//Lista vertical que contiene los super heroes
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        items(
-            items = superheroes,
-            key = { it.id }
-        ) { hero ->
+) {
+    //Para crear el text de busqueda en un estado de compose que cuando cambie podra volver a dibujar la interfaz
+    var textoBusqueda by remember {
+        mutableStateOf("")
+    }
 
-            HeroCard(
-                hero = hero,
-                onClick = {
-                    //Cuando el usuario pulse una tarjeta, enviamos el ID del héroe hacia la función que posteriormente se encargará de navegar a su detalle
-                    onVerDetalle(hero.id)
-                },
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+    //Permite filtrar la busqueda
+    val resultados = superheroes.filter {
+        it.nombre.contains(textoBusqueda, ignoreCase = true )
+    }
+
+    //Debemos agregar un contenedor tipo column al rededor de lazy column para poder agregar el textField
+    Column {
+        TextField(
+            value = textoBusqueda,
+            //Cada vez que el usuario escriba algo, guarda ese nuevo texto en textoBusqueda.
+            onValueChange = { textoBusqueda = it }
+        )
+
+        //Lista vertical que contiene los super heroes
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(
+                items = resultados,
+                key = { it.id }
+            ) { hero ->
+
+                HeroCard(
+                    hero = hero,
+                    onClick = {
+                        //Cuando el usuario pulse una tarjeta, enviamos el ID del héroe hacia la función que posteriormente se encargará de navegar a su detalle
+                        onVerDetalle(hero.id)
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
         }
+
     }
 }
 
