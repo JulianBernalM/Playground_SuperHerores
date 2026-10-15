@@ -39,5 +39,17 @@ val listaNombres = listOf(
         descripcion = "El hombre más rápido del mundo.",
         superPoderes = listOf("Super velocidad", "Reflejos", "Viaje temporal"),
         marvel = false
+    ),
+    Nombres(
+        id = 4,
+        nombre = "Thor",
+        imagenRes = R.drawable.thor,
+        descripcion = "Dios del trueno, un principe asgardiano y un guerrero de fuerza divina",
+        superPoderes = listOf(
+            "Control del trueno",
+            "Fuerza y resistencia sobrehumanas",
+            "Su martillo encantado que le permite volar"
+        ),
+        marvel = true
     )
 )
