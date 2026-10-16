@@ -8,7 +8,8 @@ data class Nombres(
     val imagenRes: Int,
     val descripcion: String,
     val superPoderes: List<String>,
-    val universo: String
+    val universo: String,
+    val tipo: String
 )
 
 //Lista de super herores con los anteriores atributos
@@ -20,7 +21,8 @@ val listaNombres = listOf(
         imagenRes = R.drawable.superman,
         descripcion = "Héroe de Krypton con fuerza extraordinaria.",
         superPoderes = listOf("Vuelo", "Super fuerza", "Visión láser"),
-        universo = "DC"
+        universo = "DC",
+        tipo = "Heroe"
     ),
     Nombres(
         id = 2,
@@ -29,7 +31,8 @@ val listaNombres = listOf(
         imagenRes = R.drawable.batman,
         descripcion = "Héroe de Gotham experto en estrategia y combate.",
         superPoderes = listOf("Inteligencia", "Artes marciales", "Tecnología"),
-        universo = "DC"
+        universo = "DC",
+        tipo = "Heroe"
     ),
     Nombres(
         id = 3,
@@ -38,7 +41,8 @@ val listaNombres = listOf(
         imagenRes = R.drawable.flash,
         descripcion = "El hombre más rápido del mundo.",
         superPoderes = listOf("Super velocidad", "Reflejos", "Viaje temporal"),
-        universo = "DC"
+        universo = "DC",
+        tipo = "Heroe"
     ),
     Nombres(
         id = 4,
@@ -50,6 +54,20 @@ val listaNombres = listOf(
             "Fuerza y resistencia sobrehumanas",
             "Su martillo encantado que le permite volar"
         ),
-        universo = "Marvel"
+        universo = "Marvel",
+        tipo = "Heroe"
+    ),
+    Nombres(
+        id = 5,
+        nombre = "Joker",
+        imagenRes = R.drawable.joker,
+        descripcion = "El famoso villano de Gotham, conocido por su personalidad caótica y su rivalidad con Batman",
+        superPoderes = listOf(
+            "Inteligencia",
+            "Estrategia",
+            "Manipulación"
+        ),
+        universo = "DC",
+        tipo = "Villano"
     )
 )

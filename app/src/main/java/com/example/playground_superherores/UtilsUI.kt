@@ -81,9 +81,11 @@ fun HeroInfo(hero: Nombres){
         Text(
             text = "Superpoderes: ${hero.superPoderes.joinToString ()}"
         )
-        //Creamos la condicion si el atributo hero.marvel es true entonces aparece Si
         Text(
             text = "Universo: ${hero.universo}"
+        )
+        Text(
+            text = "Tipo: ${hero.tipo}"
         )
     }
 
@@ -179,11 +181,14 @@ fun HeroCard(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = if (hero.universo == "DC") {
-                Color.Gray
-            } else {
-                Color.Cyan
+            containerColor = if (hero.tipo == "Villano") {
+                Color.Red
+            } else if (hero.universo == "DC") {
+                Color.Blue
+            }else {
+                Color.Yellow
             }
+
         ),
         modifier = modifier
             .fillMaxWidth()
