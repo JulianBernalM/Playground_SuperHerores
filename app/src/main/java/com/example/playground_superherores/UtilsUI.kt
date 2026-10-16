@@ -182,11 +182,11 @@ fun HeroCard(
     Card(
         colors = CardDefaults.cardColors(
             containerColor = if (hero.tipo == "Villano") {
-                Color.Red
+                Color.DarkGray
             } else if (hero.universo == "DC") {
-                Color.Blue
+                Color.Transparent
             }else {
-                Color.Yellow
+                Color.Gray
             }
 
         ),

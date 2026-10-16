@@ -1,5 +1,7 @@
 package com.example.playground_superherores
 
+import com.example.playground_superherores.Nombres
+
 //Atributos de cada super heroe
 data class Nombres(
     val id: Int,
@@ -69,5 +71,45 @@ val listaNombres = listOf(
         ),
         universo = "DC",
         tipo = "Villano"
+    ),
+    Nombres(
+        id = 6,
+        nombre = "Lex Luthor",
+        imagenRes = R.drawable.lex_luthor,
+        descripcion = "Uno de los principales enemigos de Superman, reconocido por su inteligencia, ambición y capacidad estratégica.",
+        superPoderes = listOf(
+            "Inteligencia",
+            "Estrategia",
+            "Tecnología"
+        ),
+        universo = "DC",
+        tipo = "Villano"
+    ),
+    Nombres(
+        id = 7,
+        nombre = "Reverse-Flash",
+        imagenRes = R.drawable.flash_reverse,
+        descripcion = "El archienemigo de Flash, un velocista del futuro que utiliza su velocidad para alterar la vida de Barry Allen.",
+        superPoderes = listOf(
+            "Super velocidad",
+            "Viaje temporal",
+            "Manipulación de la Fuerza de la Velocidad"
+        ),
+        universo = "DC",
+        tipo = "Villano"
+    ),
+    Nombres(
+        id = 8,
+        nombre = "Gorr",
+        imagenRes = R.drawable.gorr,
+        descripcion = "El Carnicero de Dioses, un poderoso enemigo de Thor que busca acabar con todos los dioses.",
+        superPoderes = listOf(
+            "Fuerza sobrehumana",
+            "Resistencia sobrehumana",
+            "Control de la Necroespada"
+        ),
+        universo = "Marvel",
+        tipo = "Villano"
     )
+
 )
